@@ -7,7 +7,9 @@ const { beforeBulkDestroy } = require('../../models/Product');
 router.get('/', (req, res) => {
   // find all categories
   // be sure to include its associated Products
-  Category.findAll().then((categoryData) => {
+  Category.findAll({
+    include: {model: Product}
+  }).then((categoryData) => {
     res.json(categoryData);
   })
 });
@@ -20,6 +22,7 @@ router.get('/:id', (req, res) => {
       where: {
         id: req.params.id
       },
+      include: {model: Product}
     }
   ).then((categoryFind) => {
     res.json(categoryFind)
